@@ -1,1 +1,47 @@
+public class Main {
+    public static void main(String[] args){
+        boolean yellow = false;
+        boolean[][] initialboard = new boolean[10][10];
+            //setting true values for testing
+            initialboard[0][1] = true;
+            initialboard[7][3] = true;
+            //creating the board of false?
+            for (int x = 0; x < initialboard.length; x++) {
+                for (int y = 0; y < initialboard[x].length; y++){
+                  //  strs[row][col] = ((row+col) % 2 == 0) ? "Yellow" : "Gray"
+                    System.out.print(initialboard[x][y] + " ");
+                }
+                System.out.print("\n");
+            }
+
+
+            // lots of for loops for detecting neighbors
+
+
+
+         //   if (yellow == true){
+//               int neighborabovey = y-1;
+//               int neighborabovex = x;
+//               int neighborbelowy = y+1;
+//               int neighborbelowx = x;z
+//               int neighborlefty = y;
+//               int neighborleftx = x-1;
+//               int neighborrighty = y;
+//               int neighborrightx = x+1;
+             //  if ([y-1][x] == yellow)
+                //given yellow coordinates [][] -->
+                // neighborabove = [y-1][x],
+                // neighborbelow = [y+1],
+                // neighborleft = [y][x-1],
+                // neighborright = [y][x+1]
+                //remember not to include the edges of the grid - numbers over 10 and under 0
+                //if int numneighbors is between=  2 and 3 --> yellow = true
+                //else yellow = false
+                //make sure it's for all the neighbors not just two
+
+
+
+           // }
+    }
+}
 
