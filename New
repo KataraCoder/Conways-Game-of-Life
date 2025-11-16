@@ -1,1 +1,34 @@
+public class Main {
+    public static void main(String[] args) {
+        boolean[][] truefalse = new boolean[10][10];
+        truefalse[3][1]= true;
+        for (int i = 0; i < truefalse.length; i++) {
+            for (int j = 0; j < truefalse[i].length; j++) {
+                System.out.print(truefalse[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+        int neighborcount = 0;
+        for (int i = 0; i < truefalse.length; i++) {
+            for (int j = 0; j < truefalse[i].length; j++) {
+                if (j>0 && j < 9) {
+                    int[] range = {-1,1};
+                    for (int k : range) {
+                        if (truefalse[i][j+k] == true) {
+                            neighborcount++;
+                        }
 
+                    }
+                }
+                System.out.println("number of true neighbors at " + i + " " + j + " is " + neighborcount);
+                neighborcount = 0;
+            }
+        }
+        //System.out.println("number of true neighbors:" + neighborcount + " ");
+        for (int i = 0; i < truefalse.length; i++) {
+            for (int j = 0; j < truefalse[i].length; j++) {
+                System.out.print(truefalse[i][j] + " ");
+                }
+            System.out.println();
+        }
