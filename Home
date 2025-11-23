@@ -1,22 +1,47 @@
 public class Main {
-    public static void main(String[] args){
-        boolean yellow = false;
-        boolean[][] initialboard = new boolean[10][10];
-            //setting true values for testing
-            initialboard[0][1] = true;
-            initialboard[7][3] = true;
-            //creating the board of false?
-            for (int x = 0; x < initialboard.length; x++) {
-                for (int y = 0; y < initialboard[x].length; y++){
-                  //  strs[row][col] = ((row+col) % 2 == 0) ? "Yellow" : "Gray"
-                    System.out.print(initialboard[x][y] + " ");
-                }
-                System.out.print("\n");
+    public static void main(String[] args) {
+        boolean[][] truefalse = new boolean[10][10];
+        truefalse[3][1]= true;
+        for (int i = 0; i < truefalse.length; i++) {
+            for (int j = 0; j < truefalse[i].length; j++) {
+                System.out.print(truefalse[i][j] + " ");
             }
+            System.out.println();
+        }
+        System.out.println();
+        int neighborcount = 0;
+        for (int i = 0; i < truefalse.length; i++) {
+            for (int j = 0; j < truefalse[i].length; j++) {
+                //2 more for loops -- another 2D for
 
+                if (j > 0 && j < 9) {
+                    int[] jrange = {-1,1};
+                    for (int k : jrange) {
+                        if (truefalse[i][j + k] == true) { //issue is that if k is -1 and the point is (0,0), then the coordinate becomes (0,-1) which is invalid. Need to make sure that 0 < "j+k" <10 for edges/corners
+                            neighborcount++;
+                        }
 
-            // lots of for loops for detecting neighbors
-
+                    }
+                    if (i > 0 && i < 9) {
+                        int[] irange = {-1,1};
+                        for (int g : irange) {
+                            if (truefalse[i + g][j] == true) {
+                                neighborcount++;
+                            }
+                        }
+                    }
+                }
+                System.out.println("number of true neighbors at " + i + " " + j + " is " + neighborcount);
+                neighborcount = 0;
+            }
+        }
+        //System.out.println("number of true neighbors:" + neighborcount + " ");
+        for (int i = 0; i < truefalse.length; i++) {
+            for (int j = 0; j < truefalse[i].length; j++) {
+                System.out.print(truefalse[i][j] + " ");
+            }
+            System.out.println();
+        }
 
 
          //   if (yellow == true){
