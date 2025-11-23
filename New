@@ -1,34 +1,182 @@
+package org.example;
 public class Main {
+    public class ConsoleColors {
+        public static final String RESET = "\033[0m";  // Text Reset
+
+        // Regular Colors
+        public static final String BLACK = "\033[0;30m";   // BLACK
+        public static final String RED = "\033[0;31m";     // RED
+        public static final String GREEN = "\033[0;32m";   // GREEN
+        public static final String YELLOW = "\033[0;33m";  // YELLOW
+        public static final String BLUE = "\033[0;34m";    // BLUE
+        public static final String PURPLE = "\033[0;35m";  // PURPLE
+        public static final String CYAN = "\033[0;36m";    // CYAN
+        public static final String WHITE = "\033[0;37m";   // WHITE
+    }
+
     public static void main(String[] args) {
+        int[][] board = new int[10][10];
+        for (int y=0; y<board.length; y++) {
+            for (int x=0; x<board[y].length; x++) {
+                board[y][x] = 0;
+            }
+        }
         boolean[][] truefalse = new boolean[10][10];
-        truefalse[3][1]= true;
+        int[][] neighborNumber = new int[10][10];
+        truefalse[3][3] = true;
+        truefalse[4][3] = true;
+        truefalse[5][3] = true;
+        truefalse[4][2] = true;
+        truefalse[3][4] = true;
         for (int i = 0; i < truefalse.length; i++) {
             for (int j = 0; j < truefalse[i].length; j++) {
-                System.out.print(truefalse[i][j] + " ");
+                if (truefalse[i][j]) {System.out.print(ConsoleColors.RED + truefalse[i][j] + " ");}
+                else {System.out.print(ConsoleColors.BLUE + truefalse[i][j]+ " ");}
             }
             System.out.println();
         }
+        for (int s = 0; s < 10; s++) {
+
         System.out.println();
         int neighborcount = 0;
+        int[] rangeTopBottom = {-1,0,1};
+        int[] rangeMiddle = {-1,1};
+        int[] rangeRight = {1};
+        int[] rangeLeft = {-1,0};
+        //march through the boolean array
         for (int i = 0; i < truefalse.length; i++) {
             for (int j = 0; j < truefalse[i].length; j++) {
-                if (j>0 && j < 9) {
-                    int[] range = {-1,1};
-                    for (int k : range) {
-                        if (truefalse[i][j+k] == true) {
+                //looking only at center
+                if (i > 0 && j > 0 && i < truefalse.length-1 && j < truefalse.length-1) {
+                    for (int k : rangeTopBottom) {
+                        if (truefalse[i - 1][j + k]) { // looks at row beneath current point
                             neighborcount++;
                         }
-
+                        ;
+                        if (truefalse[i + 1][j + k]) {  // looks at row above current point
+                            neighborcount++;
+                        }
+                        ;
+                    }
+                    for (int m : rangeMiddle) {
+                        if (truefalse[i][j + m]) {    //looks at row of current point
+                            neighborcount++;
+                        }
                     }
                 }
-                System.out.println("number of true neighbors at " + i + " " + j + " is " + neighborcount);
+                // looking at top row middle
+                if (i == 0 && j>0 && j<truefalse[i].length-1 ) {
+                    for (int n: rangeMiddle) {
+                        if (truefalse[i][j+n]) {
+                            neighborcount++;
+                        }
+                    }
+                    for (int p: rangeTopBottom) {
+                        if (truefalse[i+1][j+p]) {
+                            neighborcount++;
+                        }
+                    }
+                    for (int p : rangeMiddle) {
+                        if (truefalse[i][j+p]) {
+                            neighborcount++;
+                        }
+                    }
+                }
+                // looking at first column except top and bottom rows
+                if (j==0 && i > 0 && i < truefalse.length-1)  {
+                    for (int k: rangeRight) {
+                        if (truefalse[i][j+k]) {
+                            neighborcount++;
+                        }
+                        if (truefalse[i+1][j+k]) {
+                            neighborcount++;
+                        }
+                        if (truefalse[i-1][j+k]) {
+                            neighborcount++;
+                        }
+                    }
+                }
+                // looking at top left corner
+                if (j==0 && i ==0) {
+                    if (truefalse[1][1] || truefalse[0][1] || truefalse[1][0]) {
+                            neighborcount++;
+                    }
+                }
+                // top right corner
+                if (j==truefalse[i].length-1 && i == 0) {
+                    if (truefalse[0][truefalse[i].length-2] || truefalse[1][truefalse[i].length-2] || truefalse[1][truefalse[i].length-1]) {
+                        neighborcount++;
+                    }
+                }
+                // right column middle
+                if (j== truefalse[i].length-1 && i > 0 && i < truefalse.length-1) {
+                     for (int q: rangeLeft) {
+                            if (q != 0 && truefalse[i][j + q]) {
+                                neighborcount++;
+                            }
+                            if (truefalse[i + 1][j + q]) {
+                                neighborcount++;
+                            }
+                            if (truefalse[i - 1][j + q]) {
+                                neighborcount++;
+                            }
+                        }
+                }
+                //bottom right corner
+                if (j==truefalse[i].length-1 && i == truefalse.length-1) {
+                    if (truefalse[truefalse.length-1][truefalse[i].length-2] || truefalse[truefalse.length-2][truefalse[i].length-2] || truefalse[truefalse.length-2][truefalse[i].length-1]) {
+                        neighborcount++;
+                    }
+                }
+                // looking at bottom row middle
+                if (i == truefalse.length-1 && j>0 && j<truefalse[i].length-1 ) {
+                    for (int n: rangeMiddle) {
+                        if (truefalse[i][j+n]) {
+                            neighborcount++;
+                        }
+                    }
+                    for (int p: rangeTopBottom) {
+                        if (truefalse[i-1][j+p]) {
+                            neighborcount++;
+                        }
+                    }
+                }
+                //bottom left corner
+                if (j==0 && i == truefalse.length-1) {
+                    if (truefalse[truefalse.length-1][1] || truefalse[truefalse.length-2][0] || truefalse[truefalse.length-2][1]) {
+                        neighborcount++;
+                    }
+                }
+               // System.out.println("number of true neighbors at " + i + " " + j + " is " + neighborcount);
+                neighborNumber[i][j] = neighborcount;
                 neighborcount = 0;
             }
         }
-        //System.out.println("number of true neighbors:" + neighborcount + " ");
+        /*for (int i = 0; i < truefalse.length; i++) {
+            for (int j = 0; j < truefalse[i].length; j++) {
+                System.out.print(neighborNumber[i][j] + " ");
+            }
+            System.out.println();
+        }*/
+        for (int k = 0; k< neighborNumber.length; k++) {
+            for (int r = 0; r<neighborNumber[k].length; r++) {
+               if (neighborNumber[k][r] < 2) {
+                    truefalse[k][r] = false;
+               } else if (neighborNumber[k][r] > 3) {
+                   truefalse[k][r] = false;
+               } else if (!truefalse[k][r]) {
+                   if (neighborNumber[k][r] == 3) {
+                       truefalse[k][r] = true;
+                   }
+               }
+            }
+        }
         for (int i = 0; i < truefalse.length; i++) {
             for (int j = 0; j < truefalse[i].length; j++) {
-                System.out.print(truefalse[i][j] + " ");
-                }
-            System.out.println();
+                if (truefalse[i][j]) {System.out.print(ConsoleColors.RED + truefalse[i][j] + " ");}
+                else {System.out.print(ConsoleColors.BLUE + truefalse[i][j]+ " ");}
         }
+            System.out.println();
+    }
+}
+}}
